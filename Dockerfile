@@ -7,13 +7,14 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["src/AdventureCore.Api/AdventureCore.Api.csproj", "src/AdventureCore.Api/AdventureCore.Api/"]
+
+COPY ["src/AdventureCore.Api/AdventureCore.Api.csproj", "src/AdventureCore.Api/"]
 
 RUN dotnet restore "./src/AdventureCore.Api/AdventureCore.Api.csproj"
 
 COPY . .
 
-WORKDIR "/src/src/AdventureCore.Api/AdventureCore.Api"
+WORKDIR "/src/src/AdventureCore.Api"
 RUN dotnet build "./AdventureCore.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # Esta fase é usada para publicar o projeto de serviço a ser copiado para a fase final
