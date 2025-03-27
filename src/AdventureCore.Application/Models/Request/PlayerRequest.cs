@@ -1,4 +1,4 @@
-﻿namespace AdventureCore.Domain.Models
+﻿namespace AdventureCore.Application.Models.Request
 {
     public class PlayerRequest
     {
@@ -12,6 +12,6 @@
         /// A class of player
         /// </summary>
         /// <example>Barbarian</example>
-        public string ClassName { get; set; }
+        public string Class { get; set; }
     }
 }

@@ -1,26 +1,24 @@
-﻿using AdventureCore.Domain.Models;
-using AdventureCore.Domain.Settings;
+﻿using AdventureCore.Domain.Settings;
 using MongoDB.Driver;
 
-namespace AdventureCore.Infrastructure.Repository
+namespace AdventureCore.Infrastructure.Persistence.Base
 {
-    public class RepositoryBase
+    public class RepositoryBase<T> where T : class
     {
-        internal readonly IMongoCollection<Person> _users;
-        private readonly string _collectionName = "Users";
+        protected readonly IMongoCollection<T> _collection;
 
-        public RepositoryBase(EnvirolmentVariables envirolmentVariables)
+        public RepositoryBase(EnvirolmentVariables envirolmentVariables, string collectionName)
         {
-            string connectionString = string.Format(
+            var connectionString = string.Format(
                 envirolmentVariables.MONGODBSETTINGS_CONNECTIONSTRING,
                 envirolmentVariables.MONGODBDATA_USER,
                 Uri.EscapeDataString(envirolmentVariables.MONGODBDATA_PASSWORD),
                 envirolmentVariables.MONGODBDATA_CLUSTER);
 
             var client = new MongoClient(connectionString);
-
             var database = client.GetDatabase(envirolmentVariables.MONGODBSETTINGS_DATABASENAME);
-            _users = database.GetCollection<Person>(_collectionName);
+
+            _collection = database.GetCollection<T>(collectionName);
         }
     }
 }

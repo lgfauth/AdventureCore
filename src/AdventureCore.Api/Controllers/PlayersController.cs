@@ -1,4 +1,4 @@
-﻿using AdventureCore.Domain.Models;
+﻿using AdventureCore.Application.Models.Request;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdventureCore.Api.Controllers
@@ -7,26 +7,28 @@ namespace AdventureCore.Api.Controllers
     [Route("api/v1/[controller]")]
     public class PlayersController : ControllerBase
     {
-        //private readonly IPlayerService _playerService;
+        private readonly PlayerService _playerService;
 
-        public PlayersController()//IPlayerService playerService)
+        public PlayersController(PlayerService playerService)
         {
-            //_playerService = playerService;
+            _playerService = playerService;
         }
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] PlayerRequest player)
         {
-            //var result = await _playerService.CreatePlayerAsync(dto);
+            var result = await _playerService.CreatePlayerAsync(player);
+
             return Ok(player);
         }
 
-        //[HttpGet("me")]
-        //public async Task<IActionResult> GetCurrentPlayer()
-        //{
-        //    var playerId = User.Identity?.Name; // Simulação de obtenção de ID do JWT
-        //    var result = await _playerService.GetPlayerByIdAsync(playerId);
-        //    return Ok(result);
-        //}
+        [HttpGet("me")]
+        public async Task<IActionResult> GetCurrentPlayer()
+        {
+            var playerId = User.Identity?.Name; // Simulação de obtenção de ID do JWT
+            var result = await _playerService.GetPlayerByIdAsync(playerId);
+
+            return Ok(result);
+        }
     }
 }

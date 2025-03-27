@@ -8,8 +8,4 @@
     <DocumentationFile>E:\_Projetos\AdventureCore\src\AdventureCore.Api\bin\Debug\net6.0\AdventureCore.Domain.xml</DocumentationFile>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Entities\" />
-  </ItemGroup>
-
 </Project>
